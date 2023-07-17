@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 function App() {
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userObj, setUserObj] = useState(null);
   console.log(authService.currentUser)
   useEffect(() => {
     // 최초 authState 확인 시 로그인 되지 않더라도, 해당 callback이 호출 됨
@@ -14,6 +15,7 @@ function App() {
     authService.onAuthStateChanged((user) => {
       if(user){
         setIsLoggedIn(true)
+        setUserObj(user)
       } else {
         setIsLoggedIn(false)
       }
@@ -23,7 +25,7 @@ function App() {
   }, [])
   return (
     <>
-      <AppRouter isLoggedIn={isLoggedIn}/>
+      <AppRouter isLoggedIn={isLoggedIn} userObj={userObj}/>
       <footer>&copy; Nwitter {new Date().getFullYear()}</footer>
     </>
   );
